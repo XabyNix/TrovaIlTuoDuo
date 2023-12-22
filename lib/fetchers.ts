@@ -17,7 +17,7 @@ async function fetcher(endpoint: string, param?: string) {
 
 	const res = await fetch(apiUrl, {
 		method: "GET",
-		headers: { "X-Riot-Token": APIKEY },
+		headers: { "X-Riot-Token": process.env.API_KEY },
 		next: { revalidate: 10 },
 	});
 
