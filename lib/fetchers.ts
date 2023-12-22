@@ -1,4 +1,4 @@
-import { APIKEY } from "@/credentials";
+//import { APIKEY } from "@/credentials";
 import { endpoints } from "./enpoints";
 import { league } from "./types";
 
