@@ -1,35 +1,25 @@
 "use client";
 
-import React, { createContext, useState } from "react";
+import React from "react";
 import { Julee } from "next/font/google";
 import SearchBar from "./SearchBar";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
-import europe from "./../public/Mask group (Traced).svg";
-import brazil from "./../public/brazil.png";
-import { selectedServerContextType, serverList } from "@/lib/types";
+import { serverList } from "@/lib/types";
+import { useSearchParams } from "next/navigation";
 
 const julee = Julee({ weight: ["400"], subsets: ["latin"] });
 
-export const selectedServerContext = createContext<selectedServerContextType>({
-	list: [],
-	region: "",
-	set: () => {},
-});
-
 const SearchSection = () => {
-	const [selectedServer, setSelectedServer] = useState<string>("EUW");
-	function changeSelectedServer(region: string) {
-		setSelectedServer(region);
-	}
+	const param = useSearchParams();
 
 	function getImageByRegion() {
-		const foundObject = serverList.find(({ region, image }) => region === selectedServer);
+		const selectedRegion = param.get("region");
+		const foundObject = serverList.find(({ region }) => region === selectedRegion);
 		return foundObject!.image;
 	}
 
 	return (
-		<div className=" flex flex-col relative items-center">
+		<div className="flex flex-col relative items-center">
 			<div className="py-20">
 				<h1 className={`${julee.className} text-9xl`}>
 					<span className="text-myRed">Trova </span>
@@ -37,11 +27,9 @@ const SearchSection = () => {
 					il tuo duo
 				</h1>
 			</div>
-			<selectedServerContext.Provider
-				value={{ list: serverList, region: selectedServer, set: changeSelectedServer }}
-			>
-				<SearchBar className="w-full max-w-2xl" />
-			</selectedServerContext.Provider>
+
+			<SearchBar className="w-full max-w-2xl" />
+
 			<Image
 				className="absolute w-auto h-full mx-auto opacity-30 -z-10"
 				fill

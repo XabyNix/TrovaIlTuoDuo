@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Select,
 	SelectValue,
@@ -9,26 +9,34 @@ import {
 	SelectItem,
 	SelectGroup,
 } from "./ui/select";
-import { selectedServerContext } from "./SearchSection";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { serverList } from "@/lib/types";
 
 const ServerSelectMenu = ({ className }: { className?: string }) => {
-	//const [selectedServer, setSelectedServer] = useState("EUW");
+	const [region, setRegion] = useState<string>("EUW");
 
-	//const servers = ["BR", "LAS", "NA", "EUNE", "LAN", "OCE", "RU", "TP", "JP", "EUW"];
-	const regionContext = useContext(selectedServerContext);
+	const searchparam = useSearchParams();
+	const router = useRouter();
+	const pathname = usePathname();
+
+	const param = new URLSearchParams(searchparam);
+
+	useEffect(() => {
+		param.set("region", region);
+		router.push(`${pathname}?${param}`);
+		console.log("ciao");
+	}, [region]);
+
 	return (
 		<div className={className}>
-			<Select
-				defaultValue="EUW"
-				value={regionContext.region}
-				onValueChange={(value) => regionContext.set(value)}
-			>
+			<Select defaultValue="EUW" value={region} onValueChange={(value) => setRegion(value)}>
 				<SelectTrigger className="w-max font-bold border-none">
 					<SelectValue />
 				</SelectTrigger>
+
 				<SelectContent>
 					<SelectGroup>
-						{regionContext.list.map(({ region }) => (
+						{serverList.map(({ region }) => (
 							<SelectItem key={region} value={region}>
 								{region}
 							</SelectItem>
