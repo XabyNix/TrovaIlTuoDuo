@@ -24,7 +24,6 @@ const ServerSelectMenu = ({ className }: { className?: string }) => {
 	useEffect(() => {
 		param.set("region", region);
 		router.push(`${pathname}?${param}`);
-		console.log("ciao");
 	}, [region]);
 
 	return (

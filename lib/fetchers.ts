@@ -9,7 +9,7 @@ export const enum queueType {
 	flex = "RANKED_FLEX_SR",
 	tft = "RANKED_FLEX_TT",
 }
-
+console.log(process.env.NEXT_PUBLIC_API_KEY);
 async function fetcher(endpoint: string, param?: string) {
 	const BASEURL = "https://euw1.api.riotgames.com";
 
@@ -17,7 +17,7 @@ async function fetcher(endpoint: string, param?: string) {
 
 	const res = await fetch(apiUrl, {
 		method: "GET",
-		headers: { "X-Riot-Token": process.env.API_KEY },
+		headers: { "X-Riot-Token": process.env.NEXT_PUBLIC_API_KEY! },
 		next: { revalidate: 10 },
 	});
 

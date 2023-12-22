@@ -14,8 +14,6 @@ const SearchSection = () => {
 
 	function getImageByRegion() {
 		const selectedRegion = param.get("region") === null ? "EUW" : param.get("region");
-		console.log(selectedRegion);
-
 		const foundObject = serverList.find(({ region }) => region === selectedRegion);
 		return foundObject!.image;
 	}
