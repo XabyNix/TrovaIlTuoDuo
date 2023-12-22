@@ -1,7 +1,8 @@
+import { APIKEY } from "@/credentials";
 import { endpoints } from "./enpoints";
 import { league } from "./types";
 
-const APIKEY = "RGAPI-2111c48e-4187-423b-a289-d41503075538";
+/* const APIKEY = "RGAPI-2111c48e-4187-423b-a289-d41503075538"; */
 
 export const enum queueType {
 	solo = "RANKED_SOLO_5x5",
