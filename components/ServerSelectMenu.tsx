@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
 	Select,
 	SelectValue,
@@ -9,9 +9,8 @@ import {
 	SelectItem,
 	SelectGroup,
 } from "./ui/select";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { serverList } from "@/lib/types";
 import { useQueryState } from "next-usequerystate";
+import { serverList } from "@/config";
 
 const ServerSelectMenu = ({ className }: { className?: string }) => {
 	const [region, setRegion] = useQueryState("region");

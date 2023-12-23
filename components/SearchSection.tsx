@@ -4,8 +4,8 @@ import React from "react";
 import { Julee } from "next/font/google";
 import SearchBar from "./SearchBar";
 import Image from "next/image";
-import { serverList } from "@/lib/types";
 import { useQueryState } from "next-usequerystate";
+import { serverList } from "@/config";
 
 const julee = Julee({ weight: ["400"], subsets: ["latin"] });
 

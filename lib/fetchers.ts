@@ -1,17 +1,12 @@
-//import { APIKEY } from "@/credentials";
-import { endpoints } from "./enpoints";
+import { endpoints } from "../config/index";
 import { leagueEntry, leagueList } from "./types";
-
-export const enum queueType {
-	solo = "RANKED_SOLO_5x5",
-	flex = "RANKED_FLEX_SR",
-	tft = "RANKED_FLEX_TT",
-}
+import { queueType } from "./types";
 
 async function fetcher(endpoint: string, param?: string) {
 	const BASEURL = "https://euw1.api.riotgames.com";
 
-	const apiUrl = BASEURL + endpoint + param;
+	const apiUrl = param ? BASEURL + endpoint + param : BASEURL + endpoint;
+	//console.debug("orazio", apiUrl);
 
 	const response = await fetch(apiUrl, {
 		method: "GET",
@@ -20,9 +15,8 @@ async function fetcher(endpoint: string, param?: string) {
 	});
 
 	//Check for api server error
-
 	if (!response.ok) {
-		throw new Error("api server error " + response.status);
+		throw new Error("api server error " + response.status + response.statusText);
 	}
 	return await response.json();
 }
@@ -60,11 +54,22 @@ export const fetchPlayerStats = async (name: string) => {
 	try {
 		const { id } = await fetchLeagueFromSummonerName(name);
 
-		const stats = (await fetcher(endpoints.summonderLeagueStats, id)) as leagueEntry[];
-		console.log(stats);
+		const stats = (await fetcher(endpoints.summonerLeagueStats, id)) as leagueEntry[];
 		return stats;
 	} catch (error) {
 		console.error(error);
 		return null;
+	}
+};
+
+export const fetchDuoPartner = async (tier: string, rank: string, queue?: string) => {
+	try {
+		queue = queue || queueType.solo;
+		const endpoint = `${endpoints.duoPlayersEndpoint}${queue}/${rank}/${tier}`;
+
+		const duosFound = await fetcher(endpoint);
+		return duosFound;
+	} catch (error) {
+		console.log(error);
 	}
 };

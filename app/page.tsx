@@ -1,12 +1,12 @@
-import { fetchTopPlayer, queueType } from "@/lib/fetchers";
+import { fetchTopPlayer } from "@/lib/fetchers";
 import MaxWidthWrapper from "../components/MaxWidthWrapper";
 import SearchSection from "../components/SearchSection";
 import BestPlayers from "../components/BestPlayers";
-
-const ranked = queueType.solo;
+import { queueType } from "@/lib/types";
 
 export default async function Home() {
-	const topPlayer = await fetchTopPlayer(ranked);
+	const topPlayer = await fetchTopPlayer(queueType.solo);
+
 	return (
 		<MaxWidthWrapper>
 			<SearchSection />

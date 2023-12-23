@@ -1,5 +1,5 @@
 import { leagueList } from "@/lib/types";
-import PlayersList from "./PlayersList";
+import PlayersList from "./BestPlayersScroll";
 
 const BestPlayers = ({ data }: { data: leagueList[] | null }) => {
 	return (

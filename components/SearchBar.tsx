@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ServerSelectMenu from "./ServerSelectMenu";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
