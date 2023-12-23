@@ -1,7 +1,7 @@
-import { league } from "@/lib/types";
+import { leagueList } from "@/lib/types";
 import PlayersList from "./PlayersList";
 
-const BestPlayers = ({ data }: { data: league[] | null }) => {
+const BestPlayers = ({ data }: { data: leagueList[] | null }) => {
 	return (
 		<div className=" my-40 flex flex-col max-w-sm m-auto gap-10 lg:flex-row lg:max-w-full lg:justify-center">
 			{data !== null ? (

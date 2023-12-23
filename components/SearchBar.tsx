@@ -1,15 +1,32 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import ServerSelectMenu from "./ServerSelectMenu";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
-import { Button } from "./ui/button";
+import Link from "next/link";
 
 const SearchBar = ({ className }: { className?: string }) => {
+	const [name, setName] = useState("");
+
 	return (
 		<div className={cn("flex items-center relative", className)}>
-			<ServerSelectMenu className="absolute left-0 ml-3" />
-			<Input className="w-full h-max py-5 px-28" placeholder="RiotID" />
-			<Button className="absolute right-0 mr-3">Aiutami!</Button>
+			<ServerSelectMenu className="absolute left-3" />
+			<Input
+				value={name || ""}
+				onChange={(value) => setName(value.currentTarget.value)}
+				className="w-full h-max py-5 px-28"
+				placeholder="RiotID"
+			/>
+			<Link
+				href={{
+					pathname: "/playerslist",
+					query: { name: name },
+				}}
+				className="absolute right-2 shadow-md p-3 font-semibold rounded-md bg-myRed"
+			>
+				Aiutami!
+			</Link>
 		</div>
 	);
 };

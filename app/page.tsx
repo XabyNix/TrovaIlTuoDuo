@@ -1,4 +1,4 @@
-import { fetchLeagueStats, fetchTopPlayer, queueType } from "@/lib/fetchers";
+import { fetchTopPlayer, queueType } from "@/lib/fetchers";
 import MaxWidthWrapper from "../components/MaxWidthWrapper";
 import SearchSection from "../components/SearchSection";
 import BestPlayers from "../components/BestPlayers";

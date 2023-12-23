@@ -1,32 +1,30 @@
 //import { APIKEY } from "@/credentials";
 import { endpoints } from "./enpoints";
-import { league } from "./types";
-
-/* const APIKEY = "RGAPI-2111c48e-4187-423b-a289-d41503075538"; */
+import { leagueEntry, leagueList } from "./types";
 
 export const enum queueType {
 	solo = "RANKED_SOLO_5x5",
 	flex = "RANKED_FLEX_SR",
 	tft = "RANKED_FLEX_TT",
 }
-console.log(process.env.NEXT_PUBLIC_API_KEY);
+
 async function fetcher(endpoint: string, param?: string) {
 	const BASEURL = "https://euw1.api.riotgames.com";
 
 	const apiUrl = BASEURL + endpoint + param;
 
-	const res = await fetch(apiUrl, {
+	const response = await fetch(apiUrl, {
 		method: "GET",
 		headers: { "X-Riot-Token": process.env.NEXT_PUBLIC_API_KEY! },
 		next: { revalidate: 10 },
 	});
 
-	const body = await res.json();
-	if ([401, 403, 404].includes(body.status?.status_code)) {
-		console.log(body.status?.status_code);
-		throw new Error("api server error");
+	//Check for api server error
+
+	if (!response.ok) {
+		throw new Error("api server error " + response.status);
 	}
-	return body;
+	return await response.json();
 }
 
 const fetchLeagueFromSummonerName = async (name: string) => {
@@ -39,28 +37,34 @@ export const fetchTopPlayer = async (queueType: queueType) => {
 			fetcher(endpoints.topChallenger, queueType),
 			fetcher(endpoints.topGrandmaster, queueType),
 			fetcher(endpoints.topMaster, queueType),
-		])) as league[];
+		])) as leagueList[];
 
 		topPlayer.forEach((body) => {
+			if (body.entries.length > 300) {
+				body.entries = body.entries.slice(0, 300);
+			}
 			body.entries = body.entries.sort((a, b) => {
 				if (a.leaguePoints > b.leaguePoints) return -1;
 				if (a.leaguePoints < b.leaguePoints) return 1;
 				return 0;
 			});
-			if (body.entries?.length > 300) {
-				body.entries = body.entries.slice(0, 300);
-			}
 		});
 		return topPlayer;
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		return null;
 	}
 };
 
-export const fetchLeagueStats = async (name: string) => {
-	const { id } = await fetchLeagueFromSummonerName(name);
+export const fetchPlayerStats = async (name: string) => {
+	try {
+		const { id } = await fetchLeagueFromSummonerName(name);
 
-	const stats = await fetcher(endpoints.summonderLeagueStats, id);
-	return stats;
+		const stats = (await fetcher(endpoints.summonderLeagueStats, id)) as leagueEntry[];
+		console.log(stats);
+		return stats;
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
 };

@@ -5,18 +5,18 @@ import { Julee } from "next/font/google";
 import SearchBar from "./SearchBar";
 import Image from "next/image";
 import { serverList } from "@/lib/types";
-import { useSearchParams } from "next/navigation";
+import { useQueryState } from "next-usequerystate";
 
 const julee = Julee({ weight: ["400"], subsets: ["latin"] });
 
 const SearchSection = () => {
-	const param = useSearchParams();
+	const [region] = useQueryState("region");
 
-	function getImageByRegion() {
-		const selectedRegion = param.get("region") === null ? "EUW" : param.get("region");
-		const foundObject = serverList.find(({ region }) => region === selectedRegion);
+	const getImageByRegion = (urlRegion: string) => {
+		const foundObject = serverList.find(({ region }) => region === urlRegion);
+		console.log(foundObject);
 		return foundObject!.image;
-	}
+	};
 
 	return (
 		<div className="flex flex-col relative items-center">
@@ -33,7 +33,7 @@ const SearchSection = () => {
 			<Image
 				className="absolute w-auto h-full mx-auto opacity-30 -z-10"
 				fill
-				src={getImageByRegion()}
+				src={getImageByRegion(region || "EUW")}
 				alt=""
 			/>
 		</div>

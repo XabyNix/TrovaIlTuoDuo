@@ -11,24 +11,18 @@ import {
 } from "./ui/select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { serverList } from "@/lib/types";
+import { useQueryState } from "next-usequerystate";
 
 const ServerSelectMenu = ({ className }: { className?: string }) => {
-	const [region, setRegion] = useState<string>("EUW");
-
-	const searchparam = useSearchParams();
-	const router = useRouter();
-	const pathname = usePathname();
-
-	const param = new URLSearchParams(searchparam);
-
-	useEffect(() => {
-		param.set("region", region);
-		router.push(`${pathname}?${param}`);
-	}, [region]);
+	const [region, setRegion] = useQueryState("region");
 
 	return (
 		<div className={className}>
-			<Select defaultValue="EUW" value={region} onValueChange={(value) => setRegion(value)}>
+			<Select
+				defaultValue="EUW"
+				value={region || undefined}
+				onValueChange={(value) => setRegion(value)}
+			>
 				<SelectTrigger className="w-max font-bold border-none">
 					<SelectValue />
 				</SelectTrigger>
