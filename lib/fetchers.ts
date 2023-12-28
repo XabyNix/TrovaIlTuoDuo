@@ -23,7 +23,7 @@ async function fetcher(endpoint: string, param?: string) {
 
 export async function fetcherFunction(url: string, cacheOption?: RequestInit) {
 	const response = await fetch(url, {
-		headers: { "X-Riot-Token": process.env.API_KEY! },
+		headers: { "X-Riot-Token": process.env.NEXT_PUBLIC_API_KEY! },
 		...cacheOption,
 	});
 
