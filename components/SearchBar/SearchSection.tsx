@@ -6,17 +6,12 @@ import SearchBar from "./SearchBar";
 import Image from "next/image";
 import { useQueryState } from "next-usequerystate";
 import { serverList } from "@/config";
+import { getImageByRegion } from "@/lib/utils";
 
 const julee = Julee({ weight: ["400"], subsets: ["latin"] });
 
 const SearchSection = () => {
 	const [region] = useQueryState("region");
-
-	const getImageByRegion = (urlRegion: string) => {
-		const foundObject = serverList.find(({ region }) => region === urlRegion);
-		console.log(foundObject);
-		return foundObject!.image;
-	};
 
 	return (
 		<div className="flex flex-col relative items-center">

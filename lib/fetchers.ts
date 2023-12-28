@@ -21,33 +21,21 @@ async function fetcher(endpoint: string, param?: string) {
 	return await response.json();
 }
 
+export async function fetcherFunction(url: string, cacheOption?: RequestInit) {
+	const response = await fetch(url, {
+		headers: { "X-Riot-Token": process.env.API_KEY! },
+		...cacheOption,
+	});
+
+	//Check for api server error
+	if (!response.ok) {
+		throw new Error("api server error" + response.status + response.statusText + response.url);
+	}
+	return await response.json();
+}
+
 const fetchLeagueFromSummonerName = async (name: string) => {
 	return await fetcher(endpoints.summonerByName, name);
-};
-
-export const fetchTopPlayer = async (queueType: queueType) => {
-	try {
-		const topPlayer = (await Promise.all([
-			fetcher(endpoints.topChallenger, queueType),
-			fetcher(endpoints.topGrandmaster, queueType),
-			fetcher(endpoints.topMaster, queueType),
-		])) as leagueList[];
-
-		topPlayer.forEach((body) => {
-			if (body.entries.length > 300) {
-				body.entries = body.entries.slice(0, 300);
-			}
-			body.entries = body.entries.sort((a, b) => {
-				if (a.leaguePoints > b.leaguePoints) return -1;
-				if (a.leaguePoints < b.leaguePoints) return 1;
-				return 0;
-			});
-		});
-		return topPlayer;
-	} catch (error) {
-		console.error(error);
-		return null;
-	}
 };
 
 export const fetchPlayerStats = async (name: string) => {

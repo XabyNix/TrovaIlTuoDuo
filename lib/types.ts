@@ -7,6 +7,10 @@ export type leagueList = {
 	name: string;
 	queue: string;
 };
+
+export type summoner = {
+	id: string;
+};
 export type player = {
 	summonerId: string;
 	summonerName: string;

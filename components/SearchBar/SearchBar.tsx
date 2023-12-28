@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import ServerSelectMenu from "./ServerSelectMenu";
-import { Input } from "./ui/input";
+import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 

@@ -1,6 +1,7 @@
 import { player } from "@/lib/types";
 import Image from "next/image";
-import { ScrollArea } from "./ui/scroll-area";
+import { ScrollArea } from "../ui/scroll-area";
+import { cn } from "@/lib/utils";
 
 function PlayersList({ players }: { players: player[] }) {
 	return (
@@ -16,10 +17,21 @@ function PlayersList({ players }: { players: player[] }) {
 
 export default PlayersList;
 
-const Player = ({ player }: { player: player }) => {
+export const Player = ({
+	player,
+	className,
+	image,
+}: {
+	player: player;
+	className?: string;
+	image?: string;
+}) => {
 	return (
-		<div key={player.summonerId} className="flex items-center justify-between gap-3">
-			<Image src={"/3135715.png"} width={50} height={50} alt="" />
+		<div
+			key={player.summonerId}
+			className={cn("flex items-center justify-between gap-3", className)}
+		>
+			<Image src={image || "/3135715.png"} width={50} height={50} alt="" />
 			<li>{player.summonerName}</li>
 			<span className="text-myRed">{player.leaguePoints} LP</span>
 		</div>

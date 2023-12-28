@@ -1,10 +1,11 @@
 import { leagueEntry, queueType } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
 
-const UserElo = ({ data }: { data: leagueEntry }) => {
+const UserElo = ({ data, className }: { data: leagueEntry; className?: string }) => {
 	return (
-		<div className="p-7 bg-myGray rounded-lg font-bold w-max ring-2 ring-myRed ring-offset-4 ring-offset-card">
+		<div className={cn("p-7 bg-myGray rounded-lg font-bold w-max mb-5", className)}>
 			<h3>{data.queueType}</h3>
 			<div className="flex gap-5 mt-3">
 				<div>

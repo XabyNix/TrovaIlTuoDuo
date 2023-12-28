@@ -8,7 +8,7 @@ import {
 	SelectContent,
 	SelectItem,
 	SelectGroup,
-} from "./ui/select";
+} from "../ui/select";
 import { useQueryState } from "next-usequerystate";
 import { serverList } from "@/config";
 

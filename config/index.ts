@@ -1,3 +1,5 @@
+import { queueType } from "@/lib/types";
+
 export const ranks = [
 	{ rank: "Iron", image: "/ranks/Iron.png" },
 	{ rank: "Bronze", image: "/ranks/Bronze.png" },
@@ -24,10 +26,14 @@ export const serverList = [
 ];
 
 export const endpoints = {
-	summonerByName: "/lol/summoner/v4/summoners/by-name/",
-	summonerLeagueStats: "/lol/league/v4/entries/by-summoner/",
-	topChallenger: "/lol/league/v4/challengerleagues/by-queue/",
-	topGrandmaster: "/lol/league/v4/grandmasterleagues/by-queue/",
-	topMaster: "/lol/league/v4/masterleagues/by-queue/",
-	duoPlayersEndpoint: `/lol/league/v4/entries/`,
+	topChallenger:
+		"https://euw1.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/" + queueType.solo,
+	topGrandmaster:
+		"https://euw1.api.riotgames.com/lol/league/v4/grandmasterleagues/by-queue/" + queueType.solo,
+	topMaster:
+		"https://euw1.api.riotgames.com/lol/league/v4/masterleagues/by-queue/" + queueType.solo,
+
+	summonerByName: "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/",
+	summonerLeagueStats: "https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/",
+	duoPlayersEndpoint: `https://euw1.api.riotgames.com/lol/league/v4/entries/`,
 };

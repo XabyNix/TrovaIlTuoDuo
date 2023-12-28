@@ -1,22 +1,35 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import SearchBar from "@/components/SearchBar";
-import UserElo from "@/components/UserElo";
-import { fetchDuoPartner, fetchPlayerStats } from "@/lib/fetchers";
+import SearchBar from "@/components/SearchBar/SearchBar";
+import DuoPartners from "@/components/playersList/DuoPartners";
+import UserElo from "@/components/playersList/UserElo";
+import { endpoints } from "@/config";
+import { fetchDuoPartner, fetchPlayerStats, fetcherFunction } from "@/lib/fetchers";
+import { leagueEntry, summoner } from "@/lib/types";
 
-const page = async ({ searchParams }: { searchParams: any }) => {
-	const playerQueuesStats = await fetchPlayerStats(searchParams.name);
-	const { tier, rank } = playerQueuesStats![0];
-	const duo = await fetchDuoPartner(rank, tier);
+const Page = async ({ searchParams }: { searchParams: any }) => {
+	const byNameUrl = endpoints.summonerByName + searchParams.name;
+	const { id } = (await fetcherFunction(byNameUrl, { cache: "no-cache" })) as summoner;
+
+	const playerStatsUrl = endpoints.summonerLeagueStats + id;
+	const playerStatsData = (await fetcherFunction(playerStatsUrl)) as leagueEntry[];
+	const [flex, solo] = playerStatsData.filter((queueStats) => queueStats.queueType !== "CHERRY");
+
 	return (
 		<MaxWidthWrapper>
 			<SearchBar />
-			{playerQueuesStats?.map((queueStats) =>
-				queueStats.queueType !== "CHERRY" ? (
-					<UserElo key={queueStats.summonerId} data={queueStats} />
-				) : null
-			)}
+			<div className="flex gap-5 mt-32">
+				<div>
+					<UserElo
+						className="ring-2 ring-myRed ring-offset-4 ring-offset-card"
+						key={solo.summonerId}
+						data={solo}
+					/>
+					<UserElo key={flex.summonerId} data={flex} />
+				</div>
+				<DuoPartners rank={solo.rank} tier={solo.tier} />
+			</div>
 		</MaxWidthWrapper>
 	);
 };
 
-export default page;
+export default Page;
