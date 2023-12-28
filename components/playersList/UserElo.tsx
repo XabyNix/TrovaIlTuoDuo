@@ -9,7 +9,7 @@ const UserElo = ({ data, className }: { data: leagueEntry; className?: string })
 			<h3>{data.queueType}</h3>
 			<div className="flex gap-5 mt-3">
 				<div>
-					<Image src={"/ranks/Gold.png"} width={50} height={50} alt="" />
+					<Image src={`/ranks/${data.tier}.png`} width={50} height={50} alt="" />
 				</div>
 				<div className="flex gap-10 items-center">
 					<div>
