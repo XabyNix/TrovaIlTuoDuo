@@ -2,11 +2,12 @@ import { leagueEntry, leagueList } from "@/lib/types";
 import PlayersList from "./PlayersList";
 import { endpoints } from "@/config";
 import { fetcherFunction } from "@/lib/fetchers";
+import { ScrollArea } from "../ui/scroll-area";
 
 const BestPlayers = async () => {
 	const topLeaguePlayers = (await Promise.all([
-		fetcherFunction(endpoints.topChallenger, { cache: "no-cache" }),
-		fetcherFunction(endpoints.topGrandmaster, { cache: "no-cache" }),
+		fetcherFunction(endpoints.topChallenger, { next: { revalidate: 360 } }),
+		fetcherFunction(endpoints.topGrandmaster, { next: { revalidate: 360 } }),
 		fetcherFunction(endpoints.topMaster, { cache: "no-cache" }),
 	])) as leagueList[];
 
@@ -30,7 +31,9 @@ const BestPlayers = async () => {
 						Migliori giocatori <br />
 						<span className=" font-extrabold tracking-wider uppercase">{league.tier}</span>
 					</h2>
-					<PlayersList players={league.entries} />
+					<ScrollArea className="h-96 rounded-md">
+						<PlayersList players={league.entries} />
+					</ScrollArea>
 				</div>
 			))}
 		</div>

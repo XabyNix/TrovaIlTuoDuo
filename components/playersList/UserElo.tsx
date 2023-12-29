@@ -1,5 +1,5 @@
 import { leagueEntry, queueType } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { calculateWinRate, cn } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
 
@@ -20,7 +20,7 @@ const UserElo = ({ data, className }: { data: leagueEntry; className?: string })
 						<span className="block">
 							{data.wins}W {data.losses}L
 						</span>
-						<span className="block">{(data.wins / (data.wins + data.losses)) * 100}% Win Rate</span>
+						<span className="block">{calculateWinRate(data.wins, data.losses)}% Win Rate</span>
 					</div>
 				</div>
 			</div>
