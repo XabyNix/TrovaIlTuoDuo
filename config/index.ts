@@ -34,6 +34,7 @@ export const endpoints = {
 		"https://euw1.api.riotgames.com/lol/league/v4/masterleagues/by-queue/" + queueType.solo,
 
 	summonerByName: "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/",
-	summonerLeagueStats: "https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/",
-	duoPlayersEndpoint: `https://euw1.api.riotgames.com/lol/league/v4/entries/`,
+	playerRankedsStats: "https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/",
+	playersPerLeague: `https://euw1.api.riotgames.com/lol/league/v4/entries/`,
+	summonerIcon: "https://res.cloudinary.com/dw5p5em1a/image/upload/v1703956750/summonerIcons/", //"https://res.cloudinary.com/dw5p5em1a/image/upload/f_auto,q_auto/v2/icons/",
 };

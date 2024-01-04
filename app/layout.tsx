@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Providers from "./providers";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,11 +15,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="en">
 			<body
 				suppressHydrationWarning={true}
-				className={inter.className + " h-full font-sans antialiased text-white"}
+				className={inter.className + "h-full font-sans antialiased text-white"}
 			>
-				<ThemeProvider attribute="class" defaultTheme="dark">
+				<Providers>
 					<main className="flex flex-col min-h-screen">{children}</main>
-				</ThemeProvider>
+				</Providers>
 			</body>
 		</html>
 	);

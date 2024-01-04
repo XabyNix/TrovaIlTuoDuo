@@ -1,35 +1,29 @@
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import SearchBar from "@/components/SearchBar/SearchBar";
 import DuoPartners from "@/components/playersList/DuoPartners";
+import { Suspense } from "react";
+import Loading from "./loading";
+import { fetcherFunction } from "@/lib/fetchers";
+import { leagueEntry } from "@/lib/types";
 import UserElo from "@/components/playersList/UserElo";
-import { endpoints } from "@/config";
-import { fetchDuoPartner, fetchPlayerStats, fetcherFunction } from "@/lib/fetchers";
-import { leagueEntry, summoner } from "@/lib/types";
+import { Separator } from "@/components/ui/separator";
 
-const Page = async ({ searchParams }: { searchParams: any }) => {
-	const byNameUrl = endpoints.summonerByName + searchParams.name;
-	const { id } = (await fetcherFunction(byNameUrl, { cache: "no-cache" })) as summoner;
-
-	const playerStatsUrl = endpoints.summonerLeagueStats + id;
-	const playerStatsData = (await fetcherFunction(playerStatsUrl)) as leagueEntry[];
-	const [flex, solo] = playerStatsData.filter((queueStats) => queueStats.queueType !== "CHERRY");
+const page = async ({ searchParams }: { searchParams: { name: string; page: number } }) => {
+	const [solo, flex] = (await fetcherFunction(
+		`http://localhost:3000/playerslist/api/?name=${searchParams.name}`,
+		{ cache: "no-cache" }
+	)) as leagueEntry[];
 
 	return (
-		<MaxWidthWrapper>
-			<SearchBar />
-			<div className="flex gap-5 mt-32">
-				<div>
-					<UserElo
-						className="ring-2 ring-myRed ring-offset-4 ring-offset-card"
-						key={solo.summonerId}
-						data={solo}
-					/>
-					<UserElo key={flex.summonerId} data={flex} />
-				</div>
-				<DuoPartners rank={solo.rank} tier={solo.tier} />
+		<div className="flex flex-col lg:flex-row gap-3">
+			<div className=" bg-card h-max rounded-sm">
+				<UserElo key={solo.leagueID} data={solo} />
+				<Separator decorative className="bg-white opacity-20 max-w-[85%] m-auto" />
+				<UserElo key={flex.leagueID} data={flex} />
 			</div>
-		</MaxWidthWrapper>
+			<Suspense fallback={<Loading />}>
+				<DuoPartners page={searchParams.page} tier={solo.tier} rank={solo.rank} />
+			</Suspense>
+		</div>
 	);
 };
 
-export default Page;
+export default page;

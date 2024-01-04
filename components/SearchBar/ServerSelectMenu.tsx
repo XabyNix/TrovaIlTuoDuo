@@ -22,7 +22,7 @@ const ServerSelectMenu = ({ className }: { className?: string }) => {
 				value={region || undefined}
 				onValueChange={(value) => setRegion(value)}
 			>
-				<SelectTrigger className="w-max font-bold border-none">
+				<SelectTrigger className="bg-card w-max shadow-md font-bold border-none">
 					<SelectValue />
 				</SelectTrigger>
 
