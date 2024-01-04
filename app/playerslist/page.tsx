@@ -7,10 +7,9 @@ import UserElo from "@/components/playersList/UserElo";
 import { Separator } from "@/components/ui/separator";
 
 const page = async ({ searchParams }: { searchParams: { name: string; page: number } }) => {
-	const [solo, flex] = (await fetcherFunction(
-		`http://localhost:3000/playerslist/api/?name=${searchParams.name}`,
-		{ cache: "no-cache" }
-	)) as leagueEntry[];
+	const [solo, flex] = (await fetcherFunction(`/playerslist/api?name=${searchParams.name}`, {
+		cache: "no-cache",
+	})) as leagueEntry[];
 
 	return (
 		<div className="flex flex-col lg:flex-row gap-3">
