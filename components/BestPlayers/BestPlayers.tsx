@@ -1,4 +1,4 @@
-import { leagueEntry, leagueList } from "@/lib/types";
+import { leagueList } from "@/lib/types";
 import PlayersList from "./PlayersList";
 import { endpoints } from "@/config";
 import { fetcherFunction } from "@/lib/fetchers";
@@ -7,8 +7,8 @@ import { ScrollArea } from "../ui/scroll-area";
 const BestPlayers = async () => {
 	try {
 		const topLeaguePlayers = (await Promise.all([
-			fetcherFunction(endpoints.topChallenger, { next: { revalidate: 360 } }),
-			fetcherFunction(endpoints.topGrandmaster, { next: { revalidate: 360 } }),
+			fetcherFunction(endpoints.topChallenger, { cache: "no-cache" }),
+			fetcherFunction(endpoints.topGrandmaster, { cache: "no-cache" }),
 			fetcherFunction(endpoints.topMaster, { cache: "no-cache" }),
 		])) as leagueList[];
 
