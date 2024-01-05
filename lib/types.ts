@@ -37,3 +37,15 @@ export const enum queueType {
 	flex = "RANKED_FLEX_SR",
 	tft = "RANKED_FLEX_TT",
 }
+
+export type serverListType = {
+	region: string;
+	image: string;
+	platform: string;
+};
+
+//"EUW" || "BR" || "JP" || "LAS" || "NA" || "OCE" || "RU" || "TR" || "EUNE";
+/* 
+export type serverListType = {
+	[key: string]: { image: string; platform: string };
+}; */

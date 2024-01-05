@@ -1,4 +1,4 @@
-import { arrayChunks, calculateWinRate } from "@/lib/utils";
+import { arrayChunks, calculateWinRate, getEndpoint } from "@/lib/utils";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { leagueEntry, queueType } from "@/lib/types";
@@ -10,11 +10,12 @@ type prop = {
 	tier: string;
 	rank: string;
 	page: number;
+	region: string;
 };
 
-const DuoPartners = async ({ tier, rank, page }: prop) => {
+const DuoPartners = async ({ tier, rank, page, region }: prop) => {
 	const getData = async () => {
-		const url = `${endpoints.playersPerLeague}${queueType.solo}/${tier}/${rank}`;
+		const url = getEndpoint(region, `${endpoints.leaguePlayers}${queueType.solo}/${tier}/${rank}`);
 		const res = (await fetcherFunction(url)) as leagueEntry[];
 
 		const chunks: leagueEntry[][] = arrayChunks(res);

@@ -1,4 +1,4 @@
-import { queueType } from "@/lib/types";
+import { queueType, serverListType } from "@/lib/types";
 
 export const ranks = [
 	{ rank: "Iron", image: "/ranks/Iron.png" },
@@ -13,28 +13,35 @@ export const ranks = [
 	{ rank: "Challenger", image: "/ranks/Challenger.png" },
 ];
 
-export const serverList = [
-	{ region: "EUW", image: "/regions/EUW.svg" },
-	{ region: "BR", image: "/regions/BR.svg" },
-	{ region: "JP", image: "/regions/JP.svg" },
-	{ region: "LAS", image: "/regions/LAS.svg" },
-	{ region: "NA", image: "/regions/NA.svg" },
-	{ region: "OCE", image: "/regions/OCE.svg" },
-	{ region: "RU", image: "/regions/RU.svg" },
-	{ region: "TR", image: "/regions/TR.svg" },
-	{ region: "EUNE", image: "/regions/EUNE.svg" },
+export const serverList: serverListType[] = [
+	{ region: "EUW", image: "/regions/EUW.svg", platform: "https://euw1.api.riotgames.com/lol" },
+	{ region: "BR", image: "/regions/BR.svg", platform: "https://br1.api.riotgames.com/lol" },
+	{ region: "JP", image: "/regions/JP.svg", platform: "https://jp1.api.riotgames.com/lol" },
+	{ region: "LAS", image: "/regions/LAS.svg", platform: "https://la2.api.riotgames.com/lol" },
+	{ region: "NA", image: "/regions/NA.svg", platform: "https://na1.api.riotgames.com/lol" },
+	{ region: "OCE", image: "/regions/OCE.svg", platform: "https://oc1.api.riotgames.com/lol" },
+	{ region: "RU", image: "/regions/RU.svg", platform: "https://ru.api.riotgames.com/lol" },
+	{ region: "TR", image: "/regions/TR.svg", platform: "https://tr1.api.riotgames.com/lol" },
+	{ region: "EUNE", image: "/regions/EUNE.svg", platform: "https://eun1.api.riotgames.com/lol" },
 ];
 
 export const endpoints = {
-	topChallenger:
-		"https://euw1.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/" + queueType.solo,
-	topGrandmaster:
-		"https://euw1.api.riotgames.com/lol/league/v4/grandmasterleagues/by-queue/" + queueType.solo,
-	topMaster:
-		"https://euw1.api.riotgames.com/lol/league/v4/masterleagues/by-queue/" + queueType.solo,
+	topChallenger: "/league/v4/challengerleagues/by-queue/" + queueType.solo,
+	topGrandmaster: "/league/v4/grandmasterleagues/by-queue/" + queueType.solo,
+	topMaster: "/league/v4/masterleagues/by-queue/" + queueType.solo,
 
-	summonerByName: "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/",
-	playerRankedsStats: "https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/",
-	playersPerLeague: `https://euw1.api.riotgames.com/lol/league/v4/entries/`,
-	summonerIcon: "https://res.cloudinary.com/dw5p5em1a/image/upload/v1703956750/summonerIcons/", //"https://res.cloudinary.com/dw5p5em1a/image/upload/f_auto,q_auto/v2/icons/",
+	summonerByName: "/summoner/v4/summoners/by-name/",
+	summonerRankedStats: "/league/v4/entries/by-summoner/",
+	leaguePlayers: "/league/v4/entries/",
 };
+/* export const serverList: serverListType = {
+	EUW: { image: "/regions/EUW.svg", platform: "https://euw1.api.riotgames.com/lol/" },
+	BR: { image: "/regions/BR.svg", platform: "https://br1.api.riotgames.com/lol/" },
+	JP: { image: "/regions/JP.svg", platform: "https://jp1.api.riotgames.com/lol/" },
+	LAS: { image: "/regions/LAS.svg", platform: "https://la2.api.riotgames.com/lol/" },
+	NA: { image: "/regions/NA.svg", platform: "https://na1.api.riotgames.com/lol/" },
+	OCE: { image: "/regions/OCE.svg", platform: "https://oc1.api.riotgames.com/lol/" },
+	RU: { image: "/regions/RU.svg", platform: "https://ru.api.riotgames.com/lol/" },
+	TR: { image: "/regions/TR.svg", platform: "https://tr1.api.riotgames.com/lol/" },
+	EUNE: { image: "/regions/EUNE.svg", platform: "https://eun1.api.riotgames.com/lol/" },
+}; */

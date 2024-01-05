@@ -2,15 +2,15 @@ import { endpoints, serverList } from "@/config";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { fetcherFunction } from "./fetchers";
-import { leagueEntry } from "./types";
+import { leagueEntry, serverListType } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
 export const getImageByRegion = (urlRegion: string) => {
-	const foundObject = serverList.find(({ region }) => region === urlRegion);
-	return foundObject!.image;
+	const { image } = serverList.find(({ region }) => region === urlRegion)!;
+	return image;
 };
 
 export const calculateWinRate = (wins: number, losses: number) => {
@@ -19,11 +19,11 @@ export const calculateWinRate = (wins: number, losses: number) => {
 	return winrate.toPrecision(2);
 };
 
-export const getSummonerImageID = async (summonerName: string) => {
-	const URL = endpoints.summonerByName + summonerName;
-	const { profileIconId } = await fetcherFunction(URL);
+export const getEndpoint = (selectedRegion: string, endpoint: string) => {
+	const myRegion = selectedRegion ?? "EUW";
+	const server = serverList.find(({ region }) => region === myRegion);
 
-	return endpoints.summonerIcon + profileIconId + ".png";
+	return server!.platform + endpoint;
 };
 
 export const arrayChunks = (inputArray: leagueEntry[]) => {

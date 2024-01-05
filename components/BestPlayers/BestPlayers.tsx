@@ -3,13 +3,14 @@ import PlayersList from "./PlayersList";
 import { endpoints } from "@/config";
 import { fetcherFunction } from "@/lib/fetchers";
 import { ScrollArea } from "../ui/scroll-area";
+import { getEndpoint } from "@/lib/utils";
 
-const BestPlayers = async () => {
+const BestPlayers = async ({ region }: { region: string }) => {
 	try {
 		const topLeaguePlayers = (await Promise.all([
-			fetcherFunction(endpoints.topChallenger, { cache: "no-cache" }),
-			fetcherFunction(endpoints.topGrandmaster, { cache: "no-cache" }),
-			fetcherFunction(endpoints.topMaster, { cache: "no-cache" }),
+			fetcherFunction(getEndpoint(region, endpoints.topChallenger), { cache: "no-cache" }),
+			fetcherFunction(getEndpoint(region, endpoints.topGrandmaster), { cache: "no-cache" }),
+			fetcherFunction(getEndpoint(region, endpoints.topMaster), { cache: "no-cache" }),
 		])) as leagueList[];
 
 		const sortedTopLeaguePlayers = topLeaguePlayers.map((league) => {
@@ -25,7 +26,7 @@ const BestPlayers = async () => {
 		});
 
 		return (
-			<div className=" my-40 flex flex-col max-w-sm m-auto gap-10 lg:flex-row lg:max-w-full lg:justify-between">
+			<div className="my-40 flex flex-col max-w-sm m-auto gap-10 lg:flex-row lg:max-w-full lg:justify-between">
 				{sortedTopLeaguePlayers.map((league) => (
 					<div key={league.leagueId} className="flex-1">
 						<h2 className="my-7 font-bold text-center">
@@ -40,10 +41,12 @@ const BestPlayers = async () => {
 			</div>
 		);
 	} catch (error) {
+		console.log(error);
+
 		return (
 			<div className=" my-40 m-auto">
 				<h2 className="font-bold text-center">
-					Le API di Riot Games sembrano avere dei problemi :-(
+					{/* Le API di Riot Games sembrano avere dei problemi :-( */}
 				</h2>
 			</div>
 		);

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useTransition } from "react";
 import {
 	Select,
 	SelectValue,
@@ -13,15 +13,13 @@ import { useQueryState } from "next-usequerystate";
 import { serverList } from "@/config";
 
 const ServerSelectMenu = ({ className }: { className?: string }) => {
-	const [region, setRegion] = useQueryState("region");
+	const [isLoading, startTransition] = useTransition();
+
+	const [region, setRegion] = useQueryState("region", { shallow: false, startTransition });
 
 	return (
 		<div className={className}>
-			<Select
-				defaultValue="EUW"
-				value={region || undefined}
-				onValueChange={(value) => setRegion(value)}
-			>
+			<Select value={region ?? "EUW"} onValueChange={(value) => setRegion(value)}>
 				<SelectTrigger className="bg-card w-max shadow-md font-bold border-none">
 					<SelectValue />
 				</SelectTrigger>

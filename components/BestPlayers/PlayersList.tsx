@@ -5,19 +5,17 @@ import { cn } from "@/lib/utils";
 
 function PlayersList({ players }: { players: player[] }) {
 	return (
-		<ol className="list-inside list-decimal flex flex-col gap-5 bg-myGray p-5">
+		<ul className=" list-none flex flex-col gap-5 bg-myGray p-5">
 			{players.map((player) => (
-				<li key={player.summonerId}>
-					<Player player={player} />
-				</li>
+				<Player key={player.summonerId} player={player} />
 			))}
-		</ol>
+		</ul>
 	);
 }
 
 export default PlayersList;
 
-export const Player = ({
+const Player = ({
 	player,
 	className,
 	image,
@@ -27,13 +25,10 @@ export const Player = ({
 	image?: string;
 }) => {
 	return (
-		<div
-			key={player.summonerId}
-			className={cn("flex items-center justify-between gap-3", className)}
-		>
+		<li className={cn("flex items-center justify-between gap-3", className)}>
 			<Image src={image || "/3135715.png"} width={50} height={50} alt="" />
 			<span>{player.summonerName}</span>
 			<span className="text-myRed">{player.leaguePoints} LP</span>
-		</div>
+		</li>
 	);
 };
