@@ -31,6 +31,7 @@ const SearchBar = ({ className }: { className?: string }) => {
 					pathname: "/playerslist",
 					query: { ...queryParams, name: name }, //`${params.toString()}&name=${name}`,
 				}}
+				prefetch={false}
 				className="absolute right-2 shadow-md p-3 font-semibold rounded-md bg-myRed"
 			>
 				Aiutami!
