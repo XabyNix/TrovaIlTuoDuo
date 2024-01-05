@@ -16,7 +16,7 @@ const SearchBar = ({ className }: { className?: string }) => {
 	for (const [key, value] of params.entries()) {
 		queryParams[key] = value;
 	}
-	console.log(queryParams);
+
 	return (
 		<div className={cn("flex items-center relative rounded-md", className)}>
 			<ServerSelectMenu className="absolute left-3" />

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import Providers from "./providers";
 import "./globals.css";
-
+import { SpeedInsights } from "@vercel/speed-insights/next";
 const inter = Poppins({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<Providers>
 					<main className="flex flex-col min-h-screen">{children}</main>
 				</Providers>
+				<SpeedInsights />
 			</body>
 		</html>
 	);

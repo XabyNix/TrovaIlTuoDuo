@@ -6,7 +6,7 @@ export async function fetcherFunction(url: string, cacheOption?: RequestInit) {
 
 	//Check for api server error
 	if (!response.ok) {
-		throw new Error("api server error" + response.status + response.statusText + response.url);
+		throw new Error(`api server error {${response.status} ${response.statusText} ${response.url}}`);
 	}
 
 	return await response.json();

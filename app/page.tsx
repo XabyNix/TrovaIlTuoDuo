@@ -8,7 +8,6 @@ export default async function Home({ searchParams }: { searchParams: { region: s
 	return (
 		<MaxWidthWrapper>
 			<SearchSection />
-
 			<Suspense fallback={<Loading />}>
 				<BestPlayers region={searchParams.region} />
 			</Suspense>

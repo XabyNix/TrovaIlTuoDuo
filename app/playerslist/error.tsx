@@ -4,9 +4,8 @@ import { useEffect } from "react";
 
 const Error = ({ error, reset }: { error: Error; reset: () => void }) => {
 	useEffect(() => {
-		console.error(error);
+		console.log(error.message);
 	}, [error]);
-
-	return <div className=" w-max mx-auto">{error.message}</div>;
+	return <div className="mx-auto text-2xl">errore in /playerslist {error.message}</div>;
 };
 export default Error;

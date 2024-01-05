@@ -18,7 +18,6 @@ const page = async ({
 		const { id } = (await fetcherFunction(idUrl, { cache: "no-cache" })) as summoner;
 
 		const playerStatsUrl = getEndpoint(searchParams.region, endpoints.summonerRankedStats) + id;
-		console.log(playerStatsUrl);
 		const data = (await fetcherFunction(playerStatsUrl, { cache: "no-cache" })) as leagueEntry[];
 		const filteredData = data.filter((queueStats) => queueStats.queueType !== "CHERRY");
 		return filteredData;
