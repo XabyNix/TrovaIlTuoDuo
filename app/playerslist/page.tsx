@@ -20,23 +20,32 @@ const page = async ({
 		const playerStatsUrl = getEndpoint(searchParams.region, endpoints.summonerRankedStats) + id;
 		const data = (await fetcherFunction(playerStatsUrl, { cache: "no-cache" })) as leagueEntry[];
 		const filteredData = data.filter((queueStats) => queueStats.queueType !== "CHERRY");
+		console.log(filteredData);
 		return filteredData;
 	};
 
-	const [solo, flex] = await getPlayerInfo();
+	const queuesInfo = await getPlayerInfo();
 	return (
 		<div className="flex flex-col lg:flex-row gap-3">
 			<div className=" bg-card h-max rounded-sm">
-				<UserElo key={solo.leagueID} data={solo} />
-				<Separator decorative className="bg-white opacity-20 max-w-[85%] m-auto" />
-				<UserElo key={flex.leagueID} data={flex} />
+				{queuesInfo.map((queue) =>
+					queue ? (
+						<div key={queue.leagueID}>
+							<UserElo data={queue} />
+
+							{queuesInfo.length > 1 ? (
+								<Separator decorative className="bg-white opacity-20 max-w-[85%] m-auto" />
+							) : null}
+						</div>
+					) : null
+				)}
 			</div>
 			<Suspense fallback={<Loading />}>
 				<DuoPartners
 					region={searchParams.region}
 					page={searchParams.page}
-					tier={solo.tier}
-					rank={solo.rank}
+					tier={queuesInfo[0].tier}
+					rank={queuesInfo[0].rank}
 				/>
 			</Suspense>
 		</div>

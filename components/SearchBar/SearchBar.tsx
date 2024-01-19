@@ -4,7 +4,6 @@ import React, { FormEvent, FormEventHandler } from "react";
 import ServerSelectMenu from "./ServerSelectMenu";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQueryState } from "next-usequerystate";
 import { Button } from "../ui/button";
