@@ -25,31 +25,36 @@ const page = async ({
 	};
 
 	const queuesInfo = await getPlayerInfo();
-	return (
-		<div className="flex flex-col lg:flex-row gap-3">
-			<div className=" bg-card h-max rounded-sm">
-				{queuesInfo.map((queue) =>
-					queue ? (
-						<div key={queue.leagueID}>
-							<UserElo data={queue} />
 
-							{queuesInfo.length > 1 ? (
-								<Separator decorative className="bg-white opacity-20 max-w-[85%] m-auto" />
-							) : null}
-						</div>
-					) : null
-				)}
+	if (!queuesInfo.length)
+		return <h2>Il giocatore deve essere rankato in almeno una modalità tra flex e solo-duo</h2>;
+	else {
+		return (
+			<div className="flex flex-col lg:flex-row gap-3">
+				<div className=" bg-card h-max rounded-sm">
+					{queuesInfo.map((queue, index) =>
+						queue ? (
+							<div key={queue.leagueID}>
+								<UserElo data={queue} />
+
+								{queuesInfo.length > 1 && index < queuesInfo.length ? (
+									<Separator decorative className="bg-white opacity-20 max-w-[85%] m-auto" />
+								) : null}
+							</div>
+						) : null
+					)}
+				</div>
+				<Suspense fallback={<Loading />}>
+					<DuoPartners
+						region={searchParams.region}
+						page={searchParams.page}
+						tier={queuesInfo[0].tier}
+						rank={queuesInfo[0].rank}
+					/>
+				</Suspense>
 			</div>
-			<Suspense fallback={<Loading />}>
-				<DuoPartners
-					region={searchParams.region}
-					page={searchParams.page}
-					tier={queuesInfo[0].tier}
-					rank={queuesInfo[0].rank}
-				/>
-			</Suspense>
-		</div>
-	);
+		);
+	}
 };
 
 export default page;
